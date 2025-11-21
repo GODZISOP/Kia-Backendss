@@ -9,6 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root route
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is running! You can now send requests to /api/contact");
+});
+
 // Contact Form API (No DB)
 app.post("/api/contact", async (req, res) => {
   try {
@@ -20,22 +25,21 @@ app.post("/api/contact", async (req, res) => {
 
     // OPTIONAL — Send Email Notification
     if (process.env.MAIL_USER) {
-    const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      });
 
       await transporter.sendMail({
         from: process.env.MAIL_USER,
         to: process.env.ADMIN_EMAIL, // Your email
-        subject: "New Contact Form Messagse",
+        subject: "New Contact Form Message",
         html: `
           <h2>New Message Received</h2>
           <p><strong>Name:</strong> ${name}</p>
