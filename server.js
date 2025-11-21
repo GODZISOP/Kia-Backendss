@@ -35,7 +35,7 @@ app.post("/api/contact", async (req, res) => {
       await transporter.sendMail({
         from: process.env.MAIL_USER,
         to: process.env.ADMIN_EMAIL, // Your email
-        subject: "New Contact Form Message",
+        subject: "New Contact Form Messagse",
         html: `
           <h2>New Message Received</h2>
           <p><strong>Name:</strong> ${name}</p>
