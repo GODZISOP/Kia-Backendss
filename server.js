@@ -48,7 +48,7 @@ app.post("/api/contact", async (req, res) => {
 
     res.json({
       success: true,
-      message: "Message received — Thank you!"
+      message: "Message received — Thank youuu!"
     });
 
   } catch (error) {
