@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
   res.send("🚀 Backend is running! You can now send requests to /api/contact");
 });
 
-// Contact Form API (No DB)
+// Contact Form API
 app.post("/api/contact", async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
@@ -23,7 +23,7 @@ app.post("/api/contact", async (req, res) => {
       return res.status(400).json({ error: "Name, email and message required" });
     }
 
-    // OPTIONAL — Send Email Notification
+    // Send Email Notification
     if (process.env.MAIL_USER) {
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -38,7 +38,7 @@ app.post("/api/contact", async (req, res) => {
 
       await transporter.sendMail({
         from: process.env.MAIL_USER,
-        to: process.env.ADMIN_EMAIL, // Your email
+        to: process.env.ADMIN_EMAIL,
         subject: "New Contact Form Message",
         html: `
           <h2>New Message Received</h2>
@@ -52,7 +52,7 @@ app.post("/api/contact", async (req, res) => {
 
     res.json({
       success: true,
-      message: "Message received — Thank youuu!"
+      message: "Message received — Thank you!"
     });
 
   } catch (error) {
@@ -61,6 +61,11 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-// Start Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Export for Vercel serverless
+export default app;
+
+// Local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
