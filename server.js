@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Root route
 app.get("/", (req, res) => {
-  res.send("🚀 Backend is running! You can now send requests to /api/contact");
+  res.send("🚀 Backend is running!k You can now send requests to /api/contact");
 });
 
 // Contact Form API
